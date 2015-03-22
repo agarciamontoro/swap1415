@@ -9,22 +9,22 @@ Para transferir directorios de una máquina a otra puede ser de utilidad enviarl
 tar czf - /home/alejandro/dir/ | ssh alejandro@172.168.1.102 'cat > ~/tar.gz'
 ```
 
-Así, conseguimos empquetar el directorio /home/alejandro/dir/ de la máquina local y enviar el paquete tar generado a la sálida estándar (con el parámetro `-`). La salida estándar la redirigimos a ssh, de manera que el comando que se la pasa, `cat > ~/tar.gz` lee 
-el paquete del pipe y lo escribe en el fichero ~/tar.gz del usuario `alejandro` en la máquina `172.168.1.102`
+Así, conseguimos empaquetar el directorio `/home/alejandro/dir/` de la máquina local y enviar el paquete tar generado a la sálida estándar (gracias al parámetro `-`). La salida estándar la redirigimos a ssh, de manera que el comando que se la pasa, `cat > 
+~/tar.gz` lee el paquete del pipe y lo escribe en el fichero `~/tar.gz` del usuario `alejandro` en la máquina `172.168.1.102`
 
 ### Utilidad rsync
-La utilidad `rsync` ya estaba instalada en el sistema, así que para probarla sólo ha sido necesario ejecutar la órden descrita en el guión:
+La utilidad `rsync` ya estaba instalada en el sistema, así que para probarla sólo ha sido necesario ejecutar, desde la máquina secundaria, la órden descrita en el guión:
 
 ```
 rsync -avz -e ssh root@172.168.1.101:/var/www/ /var/www/
 ```
 Las diferentes opciones utilizadas son las siguientes:
 
-* **-a** Modo de archivo
-* **-v** Genera una salida más descriptiva
-* **-z** Permite la compresión de los archivos durante la transferencia
-* **-e** Permite especificar la shell remota que se usará, en este caso ssh
-* **root@172.168.1.101:/var/www/** Indica el origen del directorio remoto a copiar, indicado como _usuario_@_maquina-origen_:_directorio-origen_
+* **-a** Modo de archivo.
+* **-v** Genera una salida más descriptiva.
+* **-z** Permite la compresión de los archivos durante la transferencia.
+* **-e** Permite especificar la shell remota que se usará, en este caso ssh.
+* **root@172.168.1.101:/var/www/** Indica el origen del directorio remoto a copiar, indicado como _usuario_@_maquina-origen_:_directorio-origen_.
 * **/var/www/** Directorio local donde se guardarán los datos copiados.
 
 Al ejecutar este comando es necesario introducir la contraseña del usuario root de la máquina remota. Al hacerlo, puede ocurrir que se deniegue el acceso. La forma de arreglarlo es editar, en la máquina remota, el archivo de configuración de ssh,  
@@ -32,12 +32,12 @@ Al ejecutar este comando es necesario introducir la contraseña del usuario root
 ```
 PermitRootLogin without-password
 ```
-a lo siguiente:
+de manera que se quede como sigue:
 ```
 PermitRootLogin yes
 ```
 
-Tras reiniciar ssh con `sudo service ssh restart` y una vez que se ejecuta la órden, la salida es algo parecido a esto:
+Tras reiniciar ssh con `sudo service ssh restart` y una vez que se ejecuta la órden `rsync` en la máquina secundaria, la salida es algo parecido a esto:
 
 ```
 receiving incremental file list
@@ -46,7 +46,7 @@ sent 21 bytes  received 119 bytes  31.11 bytes/sec
 total size is 11,557  speedup is 82.55
 ```
 
-Podemos comprobar que todo ha ido bien inspeccionando el directorio /var/www/ de la máquina donde se ha hecho la copia. Ejecutando la órden `ls -laR /var/www/` observamos que el contenido es igual al de la máquina origen:
+Podemos comprobar que todo ha ido bien inspeccionando el directorio `/var/www/` de la máquina donde se ha hecho la copia. Ejecutando la órden `ls -laR /var/www/` observamos que el contenido es igual al de la máquina origen:
 
 ```
 /var/www/:
@@ -100,9 +100,9 @@ The key's randomart image is:
 +-----------------+
 ```
 
-En este caso, dejando todos los valores por defecto, se generan dos archivos en el directori `~/.ssh/`:
-* **id_dsa.pub** Clave pública, que se enviará a la máquina remota
-* **id_dsa** Clave privada, que sólo conoce la máquina local
+En este caso, dejando todos los valores por defecto, se generan dos archivos en el directorio `~/.ssh/`:
+* **id_dsa.pub** Clave pública, que se enviará a la máquina remota.
+* **id_dsa** Clave privada, que sólo conoce la máquina local.
 
 Para enviar la clave pública a la máquina remota, se puede hacer con un comando propio de ssh, de la siguiente forma:
 
@@ -130,9 +130,11 @@ de la opción -l
 ssh 172.168.1.101 -l root
 ```
 
+Si no pide introducir la contraseña, todo está bien configurado.
+
 ### Crontab
 
-Para programar tareas con un intervalo muy concreto, podemos especificarlas directamente en el archivo /etc/crontab con la sintaxis
+Para programar tareas con un intervalo muy concreto, podemos especificarlas directamente en el archivo `/etc/crontab` con la sintaxis
 
 ```
 MINUTO HORA DIA-MES MES DIA-SEMANA USUARIO COMANDO
@@ -146,7 +148,7 @@ Si queremos algo más general, como tareas que se ejecuten cada hora, cada día,
 * `/etc/cron.weekly/`
 * `/etc/cron.monthly/`
 
-Por ejemplo, para establecer que cron ejecute cada hora la sincronización de la carpeta /var/www entre las dos máquinas, podemos crear un script llamado `sync-www` en el directorio `/etc/cron.hourly` con el siguiente contenido:
+Por ejemplo, para establecer que cron ejecute cada hora la sincronización de la carpeta `/var/www` entre las dos máquinas, podemos crear un script llamado `sync-www` en el directorio `/etc/cron.hourly` con el siguiente contenido:
 
 ```bash
 #!/bin/bash
