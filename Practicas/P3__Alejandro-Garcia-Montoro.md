@@ -1,15 +1,27 @@
 
-#Práctica 1
+#Práctica 3
 
-##nginx
+En esta práctica instalaremos dos paquetes para configurar una máquina balanceadora que reparta el tráfico entrante entre los dos servidores que instalamos en la práctica 2.
+
+Por comodidad, instalaremos cada uno de los dos paquetes en dos máquinas virtuales diferentes.
+
+La siguiente tabla indica las diferentes máquinas virtuales instaladas y las IPs que tienen asignadas.
+
+| Máquina             | Hostname           | IP            |
+|---------------------|--------------------|---------------|
+| Ubuntu Server 1     | ubuntuServer1      | 172.168.1.101 |
+| Ubuntu Server 2     | ubuntuServer2      | 172.168.1.102 |
+| Balanceador nginx   | balanceadorNginx   | 172.168.1.103 |
+| Balanceador haproxy | balanceadorHaproxy | 172.168.1.104 |
+| Cliente             | cliente            | 172.168.1.201 |
+
+##Balanceador con nginx
 
 ###Instalación
 
-Clonar una de las máquinas creadas en la práctica 2, asegurándonos de tener marcada la opción "Reinicializr la dirección MAC de todas las tarjetas de red". 
+Para instalar el balanceador necesitamos una nueva máquina. Por comodidad, nos basta con clonar una de las máquinas creadas en la práctica 2, asegurándonos de tener marcada la opción "Reinicializar la dirección MAC de todas las tarjetas de red". 
 
-Desactivar Apache con la órden `update-rc.d -f apache2 remove`
-
-Para poder instalar nginx, debemos realizar unos pasos previos:
+Tras desactivar Apache con la órden `update-rc.d -f apache2 remove` podemos instalar nginx, para lo que debemos realizar unos pasos previos:
 
 **Importar la clave del repositorio**
 
@@ -42,20 +54,20 @@ apt-get install nginx
 
 ###Configuración
 
-Para configurar nginx, tenemos que editar el archivo `/etc/nginx/conf.d/default.conf`, de manera que quede así (*en negrita se indican los campos que hay que modificar en cada caso: las IPs de los servidores y el nombre del balanceador, si así se estima oportuno*):
+Para configurar nginx, tenemos que editar el archivo `/etc/nginx/conf.d/default.conf`, de manera que quede así:
 
 ```
 upstream apaches {
-	server **172.168.1.101**;
-	server **172.168.1.102**;
+	server 172.168.1.101;
+	server 172.168.1.102;
 }
 
 server{
 	listen		80;
-	server_name **balanceadorNginx**;
+	server_name balanceadorNginx;
 
-	access_log /var/log/nginx/**balanceadorNginx**.access.log;
-	error_log /var/log/nginx/**balanceadorNginx**.error.log;
+	access_log /var/log/nginx/balanceadorNginx.access.log;
+	error_log /var/log/nginx/balanceadorNginx.error.log;
 	root /var/www/;
 	
 	location /
@@ -76,11 +88,11 @@ server{
 
 Para que nuestro balanceador empiece a escuchar en el puerto que le hemos indicado, basta con ejecutar la orden `service nginx restart`
 
-Podemos ya probar el funcionamiento de nuestro balanceador. Una manera sencilla de hacerlo es ejecutar repetidamente la orden `curl http://172.168.1.103/hola.html` desde una cuarta máquina cliente. Con esta orden, lo que hacemos es solicitar la página hola.html al balanceador (cuya ip es `172.168.1.103`) y vemos que nos muestra alternativamente la de una u otra máquina servidora.
+Podemos ya probar el funcionamiento de nuestro balanceador. Una manera sencilla de hacerlo es ejecutar repetidamente la orden `curl http://172.168.1.103/hola.html` desde una cuarta máquina cliente. Con esta orden, lo que hacemos es solicitar la página `hola.html` al balanceador (cuya ip es `172.168.1.103`) y vemos que nos muestra alternativamente la de una u otra máquina servidora.
 
 ![Round robin nginx](./IMGs/P3-02-RoundRobin.png)
 
-Podemos probar distintas configuraciones. Por ejemplo, podemos dar más importancia a una máquina que otra, modificando las líneas del upstream del archivo `/etc/nginx/conf.d/default.conf` de manera que queden así:
+Podemos probar distintas configuraciones. Por ejemplo, podemos dar más importancia a una máquina que à otra, modificando las líneas del upstream del archivo `/etc/nginx/conf.d/default.conf` de manera que queden así:
 
 ```
 upstream apaches {
@@ -93,7 +105,7 @@ Tras ejecutar `service nginx restart` podemos volver a ejecutar nuestro sencillo
 
 ![Roun robin peso nginc](./IMGs/P3-03-RoundRobinPeso.png)
 
-Una configuración más interesante es aquella que, a cada IP, le asigna el mismo servidor, de manera que aplicaciones que necesiten de informaciones personalizadas puedan trabajar bien. La configuración sería así
+Una configuración más interesante es aquella que a cada IP le asigna el mismo servidor, de manera que aplicaciones que necesiten de informaciones personalizadas puedan trabajar bien. La configuración sería así
 
 ```
 upstream apaches {
@@ -107,7 +119,9 @@ Y se comporta tal como se espera:
 
 ![Asignación por IP](./IMGs/P3-04-ipHash.png)
 
-##haproxy
+----------------------------------
+
+##Balanceador con haproxy
 
 ###Instalación
 
@@ -119,7 +133,7 @@ apt-get install haproxy
 
 ###Configuración
 
-Para configurar haproxy, tenemos que editar el archivo `/etc/haproxy/haproxy.cfg`, de manera que quede de la siguiente manera:
+Para configurar haproxy, tenemos que editar el archivo `/etc/haproxy/haproxy.cfg`, de forma que quede de la siguiente manera:
 
 ```
 global
@@ -128,12 +142,9 @@ global
 
 defaults
 	mode http
-	contimeout
-	4000
-	clitimeout
-	42000
-	srvtimeout
-	43000
+	contimeout	4000
+	clitimeout	42000
+	srvtimeout	43000
 
 frontend http-in
 	bind *:80
