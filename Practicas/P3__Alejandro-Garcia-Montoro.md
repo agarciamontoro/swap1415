@@ -169,5 +169,18 @@ Podemos ya probar el funcionamiento de nuestro balanceador. Como antes, podemos 
 
 ![Round robin haproxy](./IMGs/P3-06-RoundRobin.png)
 
+Al igual que antes, podemos configurar un balanceo ponderado con el atributo `weight`. Por ejemplo, si queremos, como antes, que se asignen el doble de peticiones a la segunda máquina que las que asignamos a la primera tendremos que configurarla sección backend servers del archivo `/etc/haproxy/haproxy.cfg` para que quede de la siguiente manera:
+
+```
+backend servers
+	server m1 172.168.1.101:80 weight 1 maxconn 32
+	server m2 172.168.1.102:80 weight 2 maxconn 32
+```
+
+El efecto que conseguimos, tras ejecutar de nuevo la orden `/usr/sbin/haproxy -f /etc/haproxy/haproxy.cfg` es el mismo que logramos con nginx, como se ve en la siguiente captura de
+pantalla.
+
+![Round robin ponderado haproxy](./IMGs/P3-07-RoundRobinPesoHaproxy.png)
+
 ----
 Alejandro García Montoro.
