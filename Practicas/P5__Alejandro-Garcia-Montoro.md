@@ -26,7 +26,7 @@ INSERT INTO datos(nombre,tlf) VALUES ("Lola",95834984);
 
 La siguiente captura de pantalla muestra el estado de la base de datos tras ejecutar la orden anterior.
 
-![Estado inicial de la base de datos](IMGs/P4-01-TablasCreadas.png)
+![Estado inicial de la base de datos](IMGs/P5-01-TablasCreadas.png)
 
 
 ##Copia de seguridad manual
@@ -46,9 +46,9 @@ mysql -uroot -p
 mysql> UNLOCK TABLES;
 mysql> quit
 ```
-Se nos crea entonces un fichero (ver la siguiente captura de pantalla) que podemos enviar a la segunda máquina.
+Se nos crea entonces un fichero, cuyas primeras líneas se listan en la siguiente captura de pantalla, que podemos enviar a la segunda máquina.
 
-	![Primeras líneas del archivo creado](IMGs/P4-02-AlgunasLineas.png)
+![Primeras líneas del archivo creado](IMGs/P5-02-AlgunasLineas.png)
 
 Desde la segunda máquina ejecutamos la siguiente orden para recuperar la copia de seguridad de la primera e insertarla en la base de datos:
 
@@ -57,16 +57,15 @@ scp root@172.168.1.101:/root/contactosDB.sql contactosDB.sql
 mysql -uroot -p contactos < contactosDB.sql
 ```
 
-![Backup terminada en la segunda máquina](./IMGs/P4-03-BackupTerminada.png)
-![Base de datos en la segunda máquina](./IMGs/P4-04-BDGuardada.png)
+![Base de datos en la segunda máquina](./IMGs/P5-04-BDGuardada.png)
 
 ##Configuración maestro-esclavo
 
 Para realizar la configuración maestro-esclavo lo primero que tenemos que hacer es modificar los archivos de configuración de mysql en ambas máquinas, `/etc/mysql/my.cnf`, de manera que queden tal y como se ve en la siguiente captura de pantalla, donde se muestran sólo las líneas que hay que modificar 
 
-![Archivos de configuración modificados](./IMGs/P4-05-ConfguracionMycnf.png)
+![Archivos de configuración modificados](./IMGs/P5-05-ConfiguracionMycnf.png)
 
-Creamos ahora un usuario en la base de datos original (la de la primera máquina) al que daremos privilegios de copia, conlas siguientes órdenes:
+Creamos ahora un usuario en la base de datos original (la de la primera máquina) al que daremos privilegios de copia, con las siguientes órdenes:
 
 ```
 mysql -uroot -p
@@ -77,7 +76,7 @@ mysql> FLUSH TABLES;
 mysql> FLUSH TABLES WITH READ LOCK;
 ```
 
-![Configuración maestro](./IMGs/P4-06-ConfiguracionMysqlMaestro.png)
+![Configuración maestro](./IMGs/P5-06-ConfiguracionMysqlMaestro.png)
 
 En la segunda máquina, la que actuará como esclava, ejecutamos las siguientes órdenes:
 
@@ -89,7 +88,7 @@ mysql>  CHANGE MASTER TO MASTER_HOST='172.168.1.101',
 		MASTER_PORT=3306;
 mysql> START SLAVE;
 ```
-![Configuración maestro y esclavo](./IMGs/P4-07-ConfiguracionMysqlMaestroEsclavo.png)
+![Configuración maestro y esclavo](./IMGs/P5-07-ConfiguracionMysqlMaestroEsclavo.png)
 
 Para terminar la configuración, desbloqueamos las tablas en la primera máquina:
 
@@ -100,11 +99,11 @@ mysql> UNLOCK TABLES;
 
 Si todo ha ido bien, al ejecutar la orden `SHOW STATUS\G` en la máquina esclava, el campo `Seconds_Behind_Master` debe tener un valor distinto de `null`; en este caso, es 0:
 
-![Comprobación de que todo ha ido bien](./IMGs/P4-08-SalidaShowStatusG.png)
+![Comprobación de que todo ha ido bien](./IMGs/P5-08-SalidaShowStatusG.png)
 
 Cuando la configuración esté lista, podemos actualizar sin miedo la base de datos de la máquina maestra. Los cambios se reflejarán al instante en la máquina esclava, como vemos en la siguiente captura de pantalla; en este ejemplo, se insertan y borran tuplas desde la primera máquina y se imprimen desde la segunda, donde comprobamos que las actualizaciones se realizan automáticamente:
 
-![Pruebas de actualizaciones](./IMGs/P4-09-PruebaActualizacion.png)
+![Pruebas de actualizaciones](./IMGs/P5-09-PruebaActualizacion.png)
 
 ----
 Alejandro García Montoro.
