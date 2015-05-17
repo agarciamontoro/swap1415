@@ -31,7 +31,7 @@ apt-get install apache2-utils siege openload
 
 ##Benchmarks
 
-Es necesario tener PHP instalado y configurado para que Apache lo use; con el objetivo de sobrecargar los servidores, usaremos el siguiente script con un bucle que realiza un millón de iteraciones:
+Es necesario tener PHP instalado y configurado para que Apache lo use; con el objetivo de sobrecargar los servidores, usaremos el siguiente [script](./Scripts/benchmark.php) con un bucle que realiza un millón de iteraciones:
 
 ```php
 <?php
@@ -41,8 +41,8 @@ $tiempo_inicio = microtime(true);
 for ($i=0; $i<1000000; $i++){
 	$a = $i * $i;
 	$b = $a - $i;
-	$c = $a / $b;
-	$d = 1 / $c;
+	$c = $a / ($b+1);
+	$d = 1 / ($c+1);
 }
 
 $tiempo_fin = microtime(true);
@@ -60,7 +60,7 @@ La idea del benchmark que vamos a hacer es la siguiente: realizaremos diez ejecu
 2. Granja web con dos servidores finales y un balanceador nginx
 3. Granja web con dos servidores finales y un balanceador haproxy
 
-El [script](./SCRIPTs/script.sh) para ejecutar todas las herramientas con cada una de las tres configuraciones es el siguiente:
+El [script](./Scripts/script.sh) para ejecutar todas las herramientas con cada una de las tres configuraciones es el siguiente:
 
 ```bash
 #!/bin/bash
@@ -185,7 +185,7 @@ graficos <- lapply(campos, function(campo){
 
 	    geom_errorbar(
 	    	aes(ymin=mean-se, ymax=mean+se),
-	        width=.2,                    # Width of the error bars
+	        width=.2,
 	        position=position_dodge(.9)
 	    ) +
 
@@ -196,8 +196,8 @@ graficos <- lapply(campos, function(campo){
 
     	ggtitle(gsub("\\."," ",campo)) +
 
-	    scale_fill_hue(name="Configuración", # Legend label, use darker colors
-                   labels=c("Servidor único", "Granja web nginx", "Granja web haproxy"))
+	    scale_fill_hue(	name="Configuración",
+                   		labels=c("Servidor único", "Granja web nginx", "Granja web haproxy") )
 
 	prefijo <- argumentos[4]
 	ggsave(sprintf("../IMGs/%s/%s%s.png",prefijo,prefijo,campo))
@@ -245,7 +245,7 @@ Donde `IP` itera sobre las IPs de las tres configuraciones que queremos testear,
 
 Los tres parámetros usados son:
 
-* `-o CSV`: La salida se da en formato CSV para ser tratada con facilidad
+* `-o CSV`: La salida se da en formato CSV; facilita la manipulación de los datos
 * `-l 60 `: El benckmark se ejecuta durante 60 segundos
 * `15    `: Se simulan quince clientes concurrentes
 
@@ -296,7 +296,11 @@ Las gráficas asociadas a cada una de las medidas son:
 
 ## Conclusiones
 
-A la vista de todas las gráficas, podemos concluir que la mejor de las configuraciones es la de una granja web con un balanceador haproxy.
+A la vista de todas las gráficas, podemos concluir que la mejor de las configuraciones para las medidas extraídas es la de una granja web con un balanceador haproxy.
+
+Sin embargo, hay que tomar con precaución este estudio. Con distintas configuraciones, parámetros o scripts ejecutados en el servidor, la respuesta de cada herramienta puede variar mucho. No es lo mismo ejecutar un bucle de tres millones de iteraciones que servir diez páginas dinámicas diferentes. La respuesta puede mejorar o empeorar según el trabajo realizado.
+
+Para tomar una decisión en un escenario real, habría que adecuar la sobrecarga de los servidores a las condiciones a las que se verán sometidos cuando estén en producción. Además, habría que ajustar los parámetros de cada herramienta de manera que simulen de una forma fiel la concurrencia de clientes a nuestras máquinas.
 
 ----
 Alejandro García Montoro.

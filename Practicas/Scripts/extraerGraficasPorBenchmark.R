@@ -30,7 +30,7 @@ graficos <- lapply(campos, function(campo){
 
 	    geom_errorbar(
 	    	aes(ymin=mean-se, ymax=mean+se),
-	        width=.2,                    # Width of the error bars
+	        width=.2,
 	        position=position_dodge(.9)
 	    ) +
 
@@ -41,14 +41,10 @@ graficos <- lapply(campos, function(campo){
 
     	ggtitle(gsub("\\."," ",campo)) +
 
-	    scale_fill_hue(name="Configuración", # Legend label, use darker colors
-                   labels=c("Servidor único", "Granja web nginx", "Granja web haproxy"))
+	    scale_fill_hue(	name="Configuración",
+                   		labels=c("Servidor único", "Granja web nginx", "Granja web haproxy") )
 
 	prefijo <- argumentos[4]
 	ggsave(sprintf("../IMGs/%s/%s%s.png",prefijo,prefijo,campo))
 
 })
-
-#"Time taken for tests","Failed requests","Requests per second","Time per request"
-#"Transactions per second", "Average response time (seconds)", "Maximum response time"
-#"Availability","Elapsed time","Response time","Transaction rate","Failed transactions","Longest transaction"

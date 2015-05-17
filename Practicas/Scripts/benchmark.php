@@ -9,8 +9,8 @@ $tiempo_inicio = microtime(true);
 for ($i=0; $i<3000000; $i++){
  $a = $i * $i;
  $b = $a - $i;
- $c = $a / $b;
- $d = 1 / $c;
+ $c = $a / ($b+1);
+ $d = 1 / ($c+1);
 }
 
 $tiempo_fin = microtime(true);
