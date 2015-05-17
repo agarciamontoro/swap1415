@@ -204,7 +204,7 @@ graficos <- lapply(campos, function(campo){
 
 })
 ```
-A continuación se detallan cada uno de los benchmarks realizados y los datos obtenidos. 
+A continuación se detallan cada uno de los benchmarks realizados y los datos obtenidos (las medidas extraídas se pueden encontrar en la carpeta [Datos](./Datos/))
 
 ###Apache Benchmark
 La orden principal en la función `test_apache_benchmark` es la siguiente
