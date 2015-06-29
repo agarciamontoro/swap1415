@@ -1,0 +1,17 @@
+<pregunta>
+    <enunciado>Una de las métricas más importantes para medir las prestaciones de un sistema web es...</enunciado>
+    <opcionA>El número de conexiones por segundo.</opcionA>
+    <opcionB>El precio de cada máquina.</opcionB>
+    <opcionC>El número de máquinas de las que dispone el sistema.</opcionC>
+    <opcionD>El brillo del monitor en el que trabaja el administrador.</opcionD>
+    <solucion>A</solucion>
+</pregunta>
+
+<pregunta>
+    <enunciado>Tres de las herramientas más usadas para comprobar el rendimiento de servidores web son:</enunciado>
+    <opcionA>Apache Benchmark, httperf y nginx</opcionA>
+    <opcionB>Apache Benchmark, Minecraft y OpenWebLoad</opcionB>
+    <opcionC>Apache Benchmark, httperf y OpenWebLoad</opcionC>
+    <opcionD>Ninguna de las anteriores.</opcionD>
+    <solucion>C</solucion>
+</pregunta>
