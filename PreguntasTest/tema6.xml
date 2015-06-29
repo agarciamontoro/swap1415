@@ -1,0 +1,8 @@
+<pregunta>
+    <enunciado>¿El balanceador de carga es capaz de evitar todos los ataques que puede sufrir un sistema web?</enunciado>
+    <opcionA>Sí, todos.</opcionA>
+    <opcionB>No, pero algunos sí, como los ataques tipo denegación de servicio.</opcionB>
+    <opcionC>No, ninguno.</opcionC>
+    <opcionD>No, pero algunos sí, como los ataques físicos a los centros de datos.</opcionD>
+    <solucion>B</solucion>
+</pregunta>
