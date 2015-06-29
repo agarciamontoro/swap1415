@@ -22,7 +22,7 @@ apt-get install mdadm
 
 ##Configuración
 
-Para ver los dispositivos que representan a los discos duros HDDx, ejecutamos
+Para ver los dispositivos que representan a los discos duros Disco{1,2}, ejecutamos
 
 ```
 sudo fdisk -l
@@ -32,7 +32,7 @@ sudo fdisk -l
 
 Como vemos en la salida del comando, tenemos que trabajar con los discos `/dev/sdb` y `/dev/sdc`.
 
-Ejecutamos laks siguientes dos órdenes para crear el RAID y darle formato:
+Ejecutamos las siguientes dos órdenes para crear el RAID y darle formato:
 
 ```
 mdadm -C /dev/md0 --level=raid1 --raid-devices=2 /dev/sdb /dev/sdc
@@ -48,7 +48,13 @@ mkdir /datos
 mount /dev/md0 /datos
 ```
 
-Podemos crear algún archivo de prueba con una orden como `echo "Pues parece que todo va bien :)" > /datos/prueba.txt" y comprobar el estado del RAID con
+Podemos crear algún archivo de prueba con una orden como 
+
+```
+echo "Pues parece que todo va bien :)" > /datos/prueba.txt
+```
+
+y comprobar el estado del RAID con
 
 ```
 mdadm --detail /dev/md0
