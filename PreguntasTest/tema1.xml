@@ -1,0 +1,8 @@
+<pregunta>
+    <enunciado>Te encargan montar un servicio web con un presupuesto muy muy reducido, ¿cuál es la mejor opción de entre las siguientes?</enunciado>
+    <opcionA>Reciclar varios ordenadores viejos, limpiarlos e instalar el software necesario para hacer una granja web.</opcionA>
+    <opcionB>Comprar un ordenador con gran potencia, varios de baja gama y hacer una granja web.</opcionB>
+    <opcionC>Comprar varios ordenadores de potencia media.</opcionC>
+    <opcionD>Ninguna de las anteriores.</opcionD>
+    <solucion>A</solucion>
+</pregunta>
