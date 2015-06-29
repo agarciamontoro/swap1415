@@ -1,0 +1,17 @@
+<pregunta>
+    <enunciado>De entre las siguientes afirmaciones sobre algoritmos de balanceos de carga, escoja la correcta:</enunciado>
+    <opcionA>Un balanceador con el algoritmo round-robin reparte las sucesivas peticiones a los servidores a partes iguales, siguiendo un orden que nunca cambia.</opcionA>
+    <opcionB>El algoritmo basado en el menor número de conexiones asigna una prioridad a cada servidor y realiza el reparto de peticiones en base a esa prioridad.</opcionB>
+    <opcionC>El algoritmo basado en ponderación es el mismo que el basado en prioridad pero formando grupos.</opcionC>
+    <opcionD>Ninguna de las anteriores.</opcionD>
+    <solucion>A</solucion>
+</pregunta>
+
+<pregunta>
+    <enunciado>El balanceo de carga global...</enunciado>
+    <opcionA>Pretende aumentar la escalabilidad.</opcionA>
+    <opcionB>Es local a cada centro de datos.</opcionB>
+    <opcionC>Pretende evitar una caída total del sistema por un problema en el centro de datos</opcionC>
+    <opcionD>Ninguna de las anteriores.</opcionD>
+    <solucion>C</solucion>
+</pregunta>
