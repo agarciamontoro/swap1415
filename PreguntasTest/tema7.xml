@@ -1,0 +1,8 @@
+<pregunta>
+    <enunciado>De entre las siguientes afirmaciones sobre almacenamiento basado en RAID, elija la correcta:</enunciado>
+    <opcionA>El RAID por software es más rápido que el RAID por hardware.</opcionA>
+    <opcionB>El RAID por hardware es más rápido que el RAID por software.</opcionB>
+    <opcionC>El almacenamiento RAID ofrece menor integridad que el almacenamiento básico.</opcionC>
+    <opcionD>El almacenamiento RAID usa un solo disco en el que almacena todos los datos.</opcionD>
+    <solucion>B</solucion>
+</pregunta>
