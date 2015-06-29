@@ -1,0 +1,8 @@
+<pregunta>
+    <enunciado>¿Cuál de las definiciones siguientes es correcta?</enunciado>
+    <opcionA>Disponibilidad es la capacidad de un sistema de manejar la carga, mientras que escalabilidad es la capacidad de aceptar visitas las 24 horas.</opcionA>
+    <opcionB>Escalabilidad es la capacidad de un sistema de manejar la carga, mientras que disponibilidad es la capacidad de aceptar visitas las 24 horas.</opcionB>
+    <opcionC>Escalabilidad es la capacidad de subir al Mulhacén sin morir en el intento.</opcionC>
+    <opcionD>Ninguna de las anteriores</opcionD>
+    <solucion>B</solucion>
+</pregunta>
