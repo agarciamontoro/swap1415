@@ -1,0 +1,17 @@
+<pregunta>
+    <enunciado>El backbone es...</enunciado>
+    <opcionA>... el eje principal de la red del sistema, y se puede formar con un switch, un router o un hub.</opcionA>
+    <opcionB>... el eje principal de la red del sistema, y se puede formar con un switch, un router o un firewall.</opcionB>
+    <opcionC>... cada uno de los ejes secundarios de la red del sistema, y se puede formar con un switch, un router o un firewall.</opcionC>
+    <opcionD>... cada uno de los ejes secundarios de la red del sistema, y se puede formar con un switch, un router o un hub.</opcionD>
+    <solucion>A</solucion>
+</pregunta>
+
+<pregunta>
+    <enunciado>Con NAT...</enunciado>
+    <opcionA>... se ocultan las verdaderas IPs de los servidores últimos.</opcionA>
+    <opcionB>... mapeamos una dirección pública a una dirección privada de una de las máquinas servidoras internas.</opcionB>
+    <opcionC>... mejoramos la seguridad.</opcionC>
+    <opcionD>Todas las anteriores.</opcionD>
+    <solucion>D</solucion>
+</pregunta>
