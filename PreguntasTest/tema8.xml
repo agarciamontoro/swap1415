@@ -1,0 +1,8 @@
+<pregunta>
+    <enunciado>Los sitios web siguen la regla 80-20: el 80% del tráfico corresponde al 20% de las páginas almacenadas. ¿Cómo afecta esto al sistema?</enunciado>
+    <opcionA>Si cacheamos ese 20% de páginas en RAM, haremos que nuestros clientes tengan tiempos de servicio más rápidos.</opcionA>
+    <opcionB>Si limitamos ese 80% de tráfico, nuestros clientes serán más felices.</opcionB>
+    <opcionC>Cachear ese 20% de páginas en RAM no tiene ventaja alguna.</opcionC>
+    <opcionD>Esta regla no afecta en absoluto al sistema, podemos obviarla.</opcionD>
+    <solucion>A</solucion>
+</pregunta>
